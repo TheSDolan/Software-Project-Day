@@ -10,6 +10,7 @@ public class Driver {
 		
 		// The single time object to synchronize the threads
 		Time time = new Time();
+		time.startTime();
 		
 		// The manager room resource
 		ManagerRoom mr = new ManagerRoom();
@@ -20,6 +21,7 @@ public class Driver {
 		// The manager thread
 		Manager manager = new Manager(mr, conference, time);
 		manager.setName("Manager");
+		manager.start();
 		threads.add(manager);
 		
 		// Create the 3 teams
