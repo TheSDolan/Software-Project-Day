@@ -2,7 +2,6 @@
 public class Manager extends Thread {
 
 	private ManagerRoom managerRoom;
-	private Time time;
 	private ConferenceRoom conference;
 
 	private static final TimeObject SHOW_UP_TIME = new TimeObject(8, 0);
@@ -24,15 +23,15 @@ public class Manager extends Thread {
 			System.out.println(Time.getTime() + " Manager arrives at work.");
 			
 			// join the morning meeting
-			managerRoom.joinManagerMeeting();
+			managerRoom.managerJoinManagerMeeting();
 			
 			
 			// Wait to go home from work
-			while (time.getTime().compareTo(GO_HOME_TIME) <= 0) {
+			while (Time.getTime().compareTo(GO_HOME_TIME) <= 0) {
 				// Sleep for a simulation minute
 				Thread.sleep(Time.getPause(new TimeObject(0, 1)));
 			}
-			System.out.println(time.getTime() + " Manager leaves work.");
+			System.out.println(Time.getTime() + " Manager leaves work.");
 		} catch (InterruptedException e) {
 
 		}
