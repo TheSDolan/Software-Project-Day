@@ -8,6 +8,7 @@ public class TimeObject implements Comparator, Comparable {
 		this.hour = hour;
 		this.minute = minute;
 	}
+	
 
 	@Override
 	public int compareTo(Object arg0) {
