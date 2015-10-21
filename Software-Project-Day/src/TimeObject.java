@@ -41,5 +41,11 @@ public class TimeObject implements Comparator<TimeObject>, Comparable<TimeObject
 			}
 		}
 	}
+	 
+	@Override
+	public String toString()
+	{
+		return String.format("%02d:%02d", hour, minute);
+	}
 
 }

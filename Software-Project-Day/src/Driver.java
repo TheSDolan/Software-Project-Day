@@ -9,8 +9,7 @@ public class Driver {
 		List<Thread> threads = new ArrayList<Thread>();
 		
 		// The single time object to synchronize the threads
-		Time time = new Time();
-		time.startTime();
+		Time.StartTime();
 		
 		// The manager room resource
 		ManagerRoom mr = new ManagerRoom();
@@ -19,7 +18,7 @@ public class Driver {
 		ConferenceRoom conference = new ConferenceRoom();
 				
 		// The manager thread
-		Manager manager = new Manager(mr, conference, time);
+		Manager manager = new Manager(mr, conference);
 		manager.setName("Manager");
 		manager.start();
 		threads.add(manager);
@@ -31,7 +30,7 @@ public class Driver {
 			Team team = new Team(t);
 			
 			// Create the team lead thread
-			TeamLead currLead = new TeamLead(manager, team, conference, time);
+			TeamLead currLead = new TeamLead(manager, team, conference);
 			currLead.setName("Developer " + (t+1) + "1");
 			currLead.start();
 			threads.add(currLead);
@@ -40,7 +39,7 @@ public class Driver {
 			for(int dev = 0; dev < 3; dev++)
 			{
 				// Create the developer thread
-				Developer currDev = new Developer(currLead, team, conference, time);
+				Developer currDev = new Developer(currLead, team, conference);
 				currDev.setName("Developer" + (t+1) + "" + (dev + 2));
 				currDev.start();
 				threads.add(currDev);
