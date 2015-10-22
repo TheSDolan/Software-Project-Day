@@ -20,9 +20,9 @@ public class ManagerRoom {
 	{
 		startManagerMeeting.countDown();
 		startManagerMeeting.await();
-		System.out.println(Time.getTime() + " Daily morning standup meeting begins.");
+		InstantPrint.PrintInstantly(Time.getTime() + " Daily morning standup meeting begins.");
 		Thread.sleep(Time.getPause(new TimeObject(0,15)));
-		System.out.println(Time.getTime() + " Daily morning standup meeting ends.");
+		InstantPrint.PrintInstantly(Time.getTime() + " Daily morning standup meeting ends.");
 	}
 	public void joinManagerMeeting() throws InterruptedException
 	{

@@ -29,7 +29,7 @@ public class Driver {
 		for(int t = 0; t < 3; t++)
 		{
 			// Create the team resource
-			Team team = new Team(t);
+			Team team = new Team(t, conference);
 			
 			// Create the team lead thread
 			TeamLead currLead = new TeamLead(mr, team, conference, r.nextInt(START_TIME_OFFSET));

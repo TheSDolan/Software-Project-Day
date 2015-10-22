@@ -6,6 +6,8 @@ public class TeamLead extends Thread {
 	private ConferenceRoom conferenceRoom;
 	private final TimeObject SHOW_UP_TIME, GO_HOME_TIME;
 	
+	
+	
 	public TeamLead(ManagerRoom managerRoom, Team team, ConferenceRoom conferenceRoom, int startTimeOffset) {
 		super();
 		this.managerRoom = managerRoom;
@@ -25,17 +27,18 @@ public class TeamLead extends Thread {
 				// Sleep for a simulation minute
 				Thread.sleep(Time.getPause(new TimeObject(0, 1)));
 			}
-			System.out.println(Time.getTime() + " " + Thread.currentThread().getName() + " arrives at work.");
+			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " arrives at work.");
 			
 			// join the morning meeting
 			managerRoom.joinManagerMeeting();
+			team.teamLeadJoinTeamToday();
 			
 			// Wait to go home from work
-			while (Time.getTime().compareTo(GO_HOME_TIME) <= 0) {
+			while (Time.getTime().compareTo(GO_HOME_TIME) < 0) {
 				// Sleep for a simulation minute
 				Thread.sleep(Time.getPause(new TimeObject(0, 1)));
 			}
-			System.out.println(Time.getTime() + " " + Thread.currentThread().getName() + " leaves work.");
+			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " leaves work.");
 		} catch (InterruptedException e) {
 
 		}

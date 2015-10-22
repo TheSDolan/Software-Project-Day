@@ -27,7 +27,7 @@ public class Manager extends Thread {
 			
 			
 			// Wait to go home from work
-			while (Time.getTime().compareTo(GO_HOME_TIME) <= 0) {
+			while (Time.getTime().compareTo(GO_HOME_TIME) < 0) {
 				// Sleep for a simulation minute
 				Thread.sleep(Time.getPause(new TimeObject(0, 1)));
 			}
