@@ -33,6 +33,20 @@ public class TeamLead extends Thread {
 			managerRoom.joinManagerMeeting();
 			team.teamLeadJoinTeamToday();
 			
+			//do work, potentially generate questions until lunch time
+			while(Time.getTime().compareTo(Time.LUNCH_TIME) < 0){
+
+			}
+			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " goes to lunch.");
+			Thread.sleep(Time.getPause(new TimeObject(1,0)));
+			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " returns from lunch.");
+
+			while(Time.getTime().compareTo(Time.MEETING_TIME)< 0){
+				
+			}
+			
+			conferenceRoom.joinEndOfDayMeeting();
+			
 			// Wait to go home from work
 			while (Time.getTime().compareTo(GO_HOME_TIME) < 0) {
 				// Sleep for a simulation minute

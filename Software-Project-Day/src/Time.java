@@ -5,7 +5,7 @@ public class Time {
 	private long sTime;
 	private static Time instance;
 	public static TimeObject LUNCH_TIME = new TimeObject(12,0);
-	public static TimeObject MEETING_TIME = new TimeObject(16,30);
+	public static TimeObject MEETING_TIME = new TimeObject(16,0);
 	
 	public Time()
 	{}

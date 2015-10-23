@@ -3,14 +3,14 @@ public class Developer extends Thread {
 
 	private TeamLead teamLead;
 	private Team team;
-	private ConferenceRoom ConferenceRoom;
+	private ConferenceRoom conferenceRoom;
 	private final TimeObject SHOW_UP_TIME, GO_HOME_TIME;
 	
 	public Developer(TeamLead teamLead, Team team, ConferenceRoom conferenceRoom, int startTimeOffset) {
 		super();
 		this.teamLead = teamLead;
 		this.team = team;
-		ConferenceRoom = conferenceRoom;
+		this.conferenceRoom = conferenceRoom;
 		SHOW_UP_TIME = new TimeObject(8, startTimeOffset);
 		GO_HOME_TIME = new TimeObject(16, 30 + startTimeOffset);
 	}
@@ -32,11 +32,14 @@ public class Developer extends Thread {
 			while(Time.getTime().compareTo(Time.LUNCH_TIME) < 0){
 
 			}
+			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " goes to lunch.");
 			Thread.sleep(Time.getPause(new TimeObject(1,0)));
+			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " returns from lunch.");
 
 			while(Time.getTime().compareTo(Time.MEETING_TIME)< 0){
 				
 			}
+			conferenceRoom.joinEndOfDayMeeting();
 			// Wait to go home from work
 			while (Time.getTime().compareTo(GO_HOME_TIME) < 0) {
 				// Sleep for a simulation minute
