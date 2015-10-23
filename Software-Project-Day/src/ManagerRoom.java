@@ -1,16 +1,28 @@
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
 
 public class ManagerRoom {
 	private CountDownLatch startManagerMeeting, endManagerMeeting;
+	private Semaphore questionsAsked,questionsAnswered;
 	private static final int NUM_ATTENDING_MANAGER_MEETING = 4;
 	public ManagerRoom()
 	{
 		startManagerMeeting = new CountDownLatch(NUM_ATTENDING_MANAGER_MEETING);
 		endManagerMeeting = new CountDownLatch(NUM_ATTENDING_MANAGER_MEETING);
+		this.questionsAsked = new Semaphore(0,true);
+		this.questionsAnswered = new Semaphore(0,true);
 	}
 	
 	public void askQuestion(TeamLead lead)
-	{}
+	{
+		questionsAsked.release();
+		try {
+			questionsAnswered.acquire();
+		}
+		catch(Exception e){
+
+		}
+	}
 	
 	public void checkQuestion()
 	{
