@@ -27,7 +27,16 @@ public class Developer extends Thread {
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " arrives at work.");
 			
 			team.joinTeamToday();
-			
+
+			//do work, potentially generate questions until lunch time
+			while(Time.getTime().compareTo(Time.LUNCH_TIME) < 0){
+
+			}
+			Thread.sleep(Time.getPause(new TimeObject(1,0)));
+
+			while(Time.getTime().compareTo(Time.MEETING_TIME)< 0){
+				
+			}
 			// Wait to go home from work
 			while (Time.getTime().compareTo(GO_HOME_TIME) < 0) {
 				// Sleep for a simulation minute
