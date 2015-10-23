@@ -45,7 +45,14 @@ public class TimeObject implements Comparator<TimeObject>, Comparable<TimeObject
 	@Override
 	public String toString()
 	{
-		return String.format("%02d:%02d", hour, minute);
+		int tempHour = hour;
+		String amOrPm = "AM";
+		if(tempHour > 12)
+		{
+			tempHour -= 12;
+			amOrPm = "PM";
+		}
+		return String.format("%02d:%02d %s", tempHour, minute, amOrPm);
 	}
 
 }
