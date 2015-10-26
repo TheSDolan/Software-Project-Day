@@ -43,8 +43,10 @@ public class Team {
 	{
 		startTeamMeeting.countDown();
 		startTeamMeeting.await();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
 		endTeamMeeting.countDown();
 		endTeamMeeting.await();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 	}
 	
 
@@ -59,6 +61,7 @@ public class Team {
 		conference.startStandUpMeeting(this);
 		endTeamMeeting.countDown();
 		endTeamMeeting.await();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 		
 	}
 	
@@ -75,10 +78,12 @@ public class Team {
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " cannot ask their question because the Team Lead is gone.");
 			return;
 		}
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WAITING);
 		InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " asks a question.");
 		questionsAsked.release();
 		questionQueue.add(d);
 		questionsAnswered.acquire();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 	}
 	
 	public void askQuestion(TeamLead lead) throws InterruptedException

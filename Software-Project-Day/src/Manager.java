@@ -29,35 +29,43 @@ public class Manager extends Thread {
 				Thread.sleep(Time.getPause(new TimeObject(0, 1)));
 			}
 			System.out.println(Time.getTime() + " Manager arrives at work.");
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 			
 			// join the morning meeting
 			managerRoom.managerJoinManagerMeeting();
 			
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 			while(Time.getTime().compareTo(MEETING_ONE)< 0){
 				doNormalTask();
 			}
 			
 			// Go to first executive meeting
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " goes to executive meeting.");
 			Thread.sleep(Time.getPause(new TimeObject(1,0)));
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " returns from executive meeting.");
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 			
 			//do work, potentially generate questions until lunch time
 			while(Time.getTime().compareTo(Time.LUNCH_TIME) < 0){
 				doNormalTask();
 			}
 			// Go to lunch
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.LUNCH);
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " goes to lunch.");
 			Thread.sleep(Time.getPause(new TimeObject(1,0)));
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " returns from lunch.");
-
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
+			
 			while(Time.getTime().compareTo(MEETING_TWO)< 0){
 				doNormalTask();
 			}
 			// Go to second executive meeting
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " goes to executive meeting.");
 			Thread.sleep(Time.getPause(new TimeObject(1,0)));
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " returns from executive meeting.");
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 			
 			while(Time.getTime().compareTo(Time.MEETING_TIME)< 0){
 				doNormalTask();
@@ -71,6 +79,7 @@ public class Manager extends Thread {
 				Thread.sleep(Time.getPause(new TimeObject(0, 1)));
 			}
 			System.out.println(Time.getTime() + " Manager leaves work.");
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 		} catch (InterruptedException e) {
 
 		}

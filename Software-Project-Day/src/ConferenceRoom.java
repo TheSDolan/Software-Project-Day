@@ -21,8 +21,10 @@ public class ConferenceRoom {
 		InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " arrives at end of day meeting.");
 		startEndOfDayMeeting.countDown();
 		startEndOfDayMeeting.await();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
 		endEndOfDayMeeting.countDown();
 		endEndOfDayMeeting.await();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 	}
 	
 	/**
@@ -34,9 +36,11 @@ public class ConferenceRoom {
 		InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " arrives at end of day meeting.");
 		startEndOfDayMeeting.countDown();
 		startEndOfDayMeeting.await();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
 		InstantPrint.PrintInstantly(Time.getTime() + " End of day meeting has started.");
 		Thread.sleep(Time.getPause(new TimeObject(0,15)));
 		InstantPrint.PrintInstantly(Time.getTime() + " End of day meeting has ended.");
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 		endEndOfDayMeeting.countDown();
 		endEndOfDayMeeting.await();
 	}
@@ -55,6 +59,7 @@ public class ConferenceRoom {
 		}
 		conferenceRoomBusy = true;
 		InstantPrint.PrintInstantly(Time.getTime() + " Team " + t.getTeamNum() + " has started their meeting.");
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 		Thread.sleep(Time.getPause(new TimeObject(0, 15)));
 		stopStandUpMeeting(t);
 	}
@@ -67,6 +72,7 @@ public class ConferenceRoom {
 	{
 		InstantPrint.PrintInstantly(Time.getTime() + " Team " + t.getTeamNum() + " has ended their meeting.");
 		conferenceRoomBusy = false;
-		notifyAll();		
+		notifyAll();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
 	}
 }

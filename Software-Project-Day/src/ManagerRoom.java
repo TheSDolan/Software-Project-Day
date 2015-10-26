@@ -34,7 +34,9 @@ public class ManagerRoom {
 		}
 		questionsAsked.release();
 		questionQueue.add(lead);
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WAITING);
 		questionsAnswered.acquire();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 	}
 	
 	/**
@@ -60,9 +62,11 @@ public class ManagerRoom {
 	{
 		startManagerMeeting.countDown();
 		startManagerMeeting.await();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
 		InstantPrint.PrintInstantly(Time.getTime() + " Daily morning standup meeting begins.");
 		Thread.sleep(Time.getPause(new TimeObject(0,15)));
 		InstantPrint.PrintInstantly(Time.getTime() + " Daily morning standup meeting ends.");
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 		endManagerMeeting.countDown();
 		endManagerMeeting.await();
 	}
@@ -76,8 +80,10 @@ public class ManagerRoom {
 		// Wait for everyone to join
 		startManagerMeeting.countDown();
 		startManagerMeeting.await();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
 		endManagerMeeting.countDown();
 		endManagerMeeting.await();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 	}
 	
 	/**

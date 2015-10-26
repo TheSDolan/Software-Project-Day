@@ -28,6 +28,7 @@ public class TeamLead extends Thread {
 				Thread.sleep(Time.getPause(new TimeObject(0, 1)));
 			}
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " arrives at work.");
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 			
 			// join the morning meeting
 			managerRoom.joinManagerMeeting();
@@ -37,9 +38,11 @@ public class TeamLead extends Thread {
 			while(Time.getTime().compareTo(Time.LUNCH_TIME) < 0){
 				doNormalTask();
 			}
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.LUNCH);
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " goes to lunch.");
 			Thread.sleep(Time.getPause(new TimeObject(1,0)));
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " returns from lunch.");
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 
 			while(Time.getTime().compareTo(Time.MEETING_TIME)< 0){
 				doNormalTask();
@@ -56,6 +59,7 @@ public class TeamLead extends Thread {
 				Thread.sleep(Time.getPause(new TimeObject(0, 1)));
 			}
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " leaves work.");
+			StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 		} catch (InterruptedException e) {
 
 		}
