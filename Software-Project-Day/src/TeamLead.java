@@ -40,7 +40,7 @@ public class TeamLead extends Thread {
 			}
 			StatisticGatherer.changeTask(StatisticGatherer.TaskType.LUNCH);
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " goes to lunch.");
-			Thread.sleep(Time.getPause(new TimeObject(1,0)));
+			Thread.sleep(Time.getPause(new TimeObject(0,30)));
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " returns from lunch.");
 			StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 

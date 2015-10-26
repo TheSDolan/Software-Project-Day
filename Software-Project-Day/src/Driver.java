@@ -31,7 +31,7 @@ public class Driver {
 		for(int t = 0; t < 3; t++)
 		{
 			// Create the team resource
-			Team team = new Team(t, conference, mr);
+			Team team = new Team(t+1, conference, mr);
 			
 			// Create the team lead thread
 			TeamLead currLead = new TeamLead(mr, team, conference, r.nextInt(START_TIME_OFFSET));
@@ -60,6 +60,6 @@ public class Driver {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(StatisticGatherer.getStatistics());
+		StatisticGatherer.printStatistics();
 	}
 }

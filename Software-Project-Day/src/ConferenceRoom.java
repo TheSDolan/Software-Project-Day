@@ -59,17 +59,18 @@ public class ConferenceRoom {
 		}
 		conferenceRoomBusy = true;
 		InstantPrint.PrintInstantly(Time.getTime() + " Team " + t.getTeamNum() + " has started their meeting.");
-		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
-		Thread.sleep(Time.getPause(new TimeObject(0, 15)));
-		stopStandUpMeeting(t);
 	}
 		
 	/**
 	 * Allows the team to stop their stand up meeting and release the conference room
 	 * @param t
+	 * @throws InterruptedException 
 	 */
-	public synchronized void stopStandUpMeeting(Team t)
+	public synchronized void stopStandUpMeeting(Team t) throws InterruptedException
 	{
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
+		Thread.sleep(Time.getPause(new TimeObject(0, 15)));
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
 		InstantPrint.PrintInstantly(Time.getTime() + " Team " + t.getTeamNum() + " has ended their meeting.");
 		conferenceRoomBusy = false;
 		notifyAll();

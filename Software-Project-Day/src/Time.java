@@ -1,6 +1,6 @@
 
 public class Time {
-	private static final long MS_PER_MIN = 10;
+	public static final long MS_PER_MIN = 10;
 	private static final long START_MINUTES = 60*7 + 45; // Start at 7:45 am
 	private long sTime;
 	private static Time instance;

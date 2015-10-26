@@ -52,7 +52,7 @@ public class StatisticGatherer {
 	 * Changes the task for the current thread
 	 * @param tt - the new task
 	 */
-	private void changeTaskPrivate(TaskType tt)
+	private synchronized void changeTaskPrivate(TaskType tt)
 	{
 		if(this.threadMap.containsKey(Thread.currentThread()))
 		{
@@ -69,28 +69,33 @@ public class StatisticGatherer {
 	 * Prints out a string that tells the 4 statistics of how people spent their time
 	 * @return
 	 */
-	public static String getStatistics()
+	public static void printStatistics()
 	{
 		long totalLunch = 0;
 		long totalWorking = 0;
 		long totalMeeting = 0;
 		long totalWaiting = 0;
 		
-		for(StatObject so : getInstance().threadMap.values())
+		for(Thread key : getInstance().threadMap.keySet())
 		{
+			StatObject so = getInstance().threadMap.get(key);
+			long total = so.totalWorking + so.totalMeeting + so.totalWaiting+ so.totalLunch;
+			System.out.println( key.getName() + ": Total Lunch: " + millisToMinutes(so.totalLunch) + " Total Working: " +
+		millisToMinutes(so.totalWorking) + " Total Meeting: " + millisToMinutes(so.totalMeeting) 
+		+ " Total Waiting: " + millisToMinutes(so.totalWaiting) + " TOTAL: " + millisToMinutes(total));
 			totalLunch += so.totalLunch;
 			totalWorking += so.totalWorking;
 			totalMeeting += so.totalMeeting;
 			totalWaiting += so.totalWaiting;
 		}
-		return "Total Lunch: " + millisToMinutes(totalLunch) + " Total Working: " +
+		System.out.println("TOTAL STATS: Total Lunch: " + millisToMinutes(totalLunch) + " Total Working: " +
 		millisToMinutes(totalWorking) + " Total Meeting: " + millisToMinutes(totalMeeting)
-		+ " Total Waiting: " + millisToMinutes(totalWaiting);
+		+ " Total Waiting: " + millisToMinutes(totalWaiting));
 	}
 	
 	private static int millisToMinutes(long millis)
 	{
-		return (int) (millis/10);
+		return (int) (millis/Time.MS_PER_MIN);
 	}
 	
 	private class StatObject
@@ -108,9 +113,10 @@ public class StatisticGatherer {
 			totalMeeting = 0;
 		}
 		
-		public void changeTask(TaskType tt)
+		public synchronized void changeTask(TaskType tt)
 		{
-			long elapsed = System.currentTimeMillis() - lastCheckIn;
+			long current = System.currentTimeMillis();
+			long elapsed = current - lastCheckIn;
 			switch (currentType)
 			{
 				case WORKING:
@@ -128,7 +134,7 @@ public class StatisticGatherer {
 				default:
 					System.out.println("ISSUE FOUND");
 			}
-			lastCheckIn = System.currentTimeMillis();
+			lastCheckIn = current;
 			currentType = tt;
 		}
 	}

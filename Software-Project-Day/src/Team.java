@@ -7,7 +7,7 @@ public class Team {
 	
 	private int teamNum;
 	private boolean teamLeadGone;
-	private CountDownLatch startTeamMeeting, endTeamMeeting;
+	private CountDownLatch startTeamMeeting, joinTeamMeeting, endTeamMeeting;
 	private Semaphore questionsAsked,questionsAnswered;
 	private ManagerRoom managerRoom;
 	private static final int NUM_ATTENDING_TEAM_MEETING = 4;
@@ -26,6 +26,7 @@ public class Team {
 		this.teamNum = teamNum;
 		startTeamMeeting = new CountDownLatch(NUM_ATTENDING_TEAM_MEETING);
 		endTeamMeeting = new CountDownLatch(NUM_ATTENDING_TEAM_MEETING);
+		joinTeamMeeting = new CountDownLatch(NUM_ATTENDING_TEAM_MEETING);
 		this.questionsAsked = new Semaphore(0,true);
 		this.questionsAnswered = new Semaphore(0,true);
 		this.conference = conference;
@@ -41,6 +42,8 @@ public class Team {
 	 */
 	public void joinTeamToday() throws InterruptedException
 	{
+		joinTeamMeeting.countDown();
+		joinTeamMeeting.await();
 		startTeamMeeting.countDown();
 		startTeamMeeting.await();
 		StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
@@ -55,10 +58,14 @@ public class Team {
 	 * @throws InterruptedException
 	 */
 	public void teamLeadJoinTeamToday() throws InterruptedException {
-		startTeamMeeting.countDown();
-		startTeamMeeting.await();
+		joinTeamMeeting.countDown();
+		joinTeamMeeting.await();
 		InstantPrint.PrintInstantly(Time.getTime() + " Everyone on team " + teamNum + " has arrived.");
 		conference.startStandUpMeeting(this);
+		startTeamMeeting.countDown();
+		startTeamMeeting.await();
+		StatisticGatherer.changeTask(StatisticGatherer.TaskType.MEETING);
+		conference.stopStandUpMeeting(this);
 		endTeamMeeting.countDown();
 		endTeamMeeting.await();
 		StatisticGatherer.changeTask(StatisticGatherer.TaskType.WORKING);
