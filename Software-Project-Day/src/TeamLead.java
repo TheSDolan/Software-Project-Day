@@ -35,15 +35,18 @@ public class TeamLead extends Thread {
 			
 			//do work, potentially generate questions until lunch time
 			while(Time.getTime().compareTo(Time.LUNCH_TIME) < 0){
-
+				doNormalTask();
 			}
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " goes to lunch.");
 			Thread.sleep(Time.getPause(new TimeObject(1,0)));
 			InstantPrint.PrintInstantly(Time.getTime() + " " + Thread.currentThread().getName() + " returns from lunch.");
 
 			while(Time.getTime().compareTo(Time.MEETING_TIME)< 0){
-				
+				doNormalTask();
 			}
+			
+			// Dismiss all outstanding questions
+			team.dismissQuestions();
 			
 			conferenceRoom.joinEndOfDayMeeting();
 			
@@ -57,5 +60,12 @@ public class TeamLead extends Thread {
 
 		}
 		
+	}
+	
+	
+	private void doNormalTask() throws InterruptedException
+	{
+		team.checkQuestion(this);
+		Thread.sleep(Time.getPause(new TimeObject(0,1)));
 	}
 }

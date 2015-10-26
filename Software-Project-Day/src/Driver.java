@@ -5,6 +5,8 @@ import java.util.Random;
 public class Driver {
 
 	private static final int START_TIME_OFFSET = 30;
+	private static final int MINIMUM_QUESTION_RATE = 20;
+	private static final int MAXIMUM_QUESTION_RATE = 30;
 	public static void main(String [] args)
 	{
 		// List to hold all of the threads
@@ -29,11 +31,11 @@ public class Driver {
 		for(int t = 0; t < 3; t++)
 		{
 			// Create the team resource
-			Team team = new Team(t, conference);
+			Team team = new Team(t, conference, mr);
 			
 			// Create the team lead thread
 			TeamLead currLead = new TeamLead(mr, team, conference, r.nextInt(START_TIME_OFFSET));
-			currLead.setName("Developer " + (t+1) + "1");
+			currLead.setName("Developer" + (t+1) + "1");
 			currLead.start();
 			threads.add(currLead);
 			
@@ -41,7 +43,7 @@ public class Driver {
 			for(int dev = 0; dev < 3; dev++)
 			{
 				// Create the developer thread
-				Developer currDev = new Developer(currLead, team, conference, r.nextInt(START_TIME_OFFSET));
+				Developer currDev = new Developer(team, conference, r.nextInt(START_TIME_OFFSET), r.nextInt(MAXIMUM_QUESTION_RATE - MINIMUM_QUESTION_RATE) + MINIMUM_QUESTION_RATE);
 				currDev.setName("Developer" + (t+1) + "" + (dev + 2));
 				currDev.start();
 				threads.add(currDev);

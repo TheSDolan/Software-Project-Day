@@ -10,6 +10,11 @@ public class Manager extends Thread {
 	private static final TimeObject MEETING_ONE = new TimeObject(10, 0);
 	private static final TimeObject MEETING_TWO = new TimeObject(14, 0);
 
+	/**
+	 * 
+	 * @param managerRoom - this manager's room resource
+	 * @param conference - the conference room resource
+	 */
 	public Manager(ManagerRoom managerRoom, ConferenceRoom conference) {
 		this.managerRoom = managerRoom;
 		this.conference = conference;
@@ -57,7 +62,7 @@ public class Manager extends Thread {
 			while(Time.getTime().compareTo(Time.MEETING_TIME)< 0){
 				doNormalTask();
 			}
-			
+			managerRoom.dismissQuestions();
 			conference.managerJoinEndOfDayMeeting();
 			
 			// Wait to go home from work
