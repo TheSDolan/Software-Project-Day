@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Driver {
+public class Main {
 
 	private static final int START_TIME_OFFSET = 30;
 	private static final int MINIMUM_QUESTION_RATE = 20;
